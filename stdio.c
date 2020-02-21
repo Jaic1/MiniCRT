@@ -79,6 +79,7 @@ static int open(const char *pathname, int flags, int mode)
         "movl %%eax, %0 \n\t"
         : "=m"(fd)
         : "m"(pathname), "m"(flags), "m"(mode));
+    return fd;
 }
 
 static int read(int fd, void *buffer, unsigned size)
@@ -104,7 +105,7 @@ static int write(int fd, const void *buffer, unsigned size)
         "movl %3, %%edx \n\t"
         "int $0x80 \n\t"
         "movl %%eax, %0 \n\t"
-        : "=m"(ret),
+        : "=m"(ret)
         : "m"(fd), "m"(buffer), "m"(size));
     return ret;
 }
@@ -132,6 +133,7 @@ static int seek(int fd, int offset, int mode)
         "movl %%eax, %0 \n\t"
         : "=m"(ret)
         : "m"(fd), "m"(offset), "m"(mode));
+    return ret;
 }
 
 FILE *fopen(const char *filename, const char *mode)

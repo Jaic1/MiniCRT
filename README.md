@@ -25,3 +25,15 @@ int fputc(char c, FILE *stream)
         return c;
 }
 ```
+
+3. In *tests/test.c*, `size` is not `count`
+```
+fp = fopen("test.txt", "w");
+    for (i = 0; i < argv; i++)
+    {
+        int len = strlen(v[i]);
+        fwrite(&len, sizeof(int), 1, fp);
+        fwrite(v[i], 1, len, fp);
+    }
+    fclose(fp);
+```

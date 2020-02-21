@@ -44,8 +44,8 @@ char *itoa(int n, char *str, int radix)
 int strcmp(const char *src, const char *dst)
 {
     int ret = 0;
-    unsigned char *p1 = src;
-    unsigned char *p2 = dst;
+    unsigned const char *p1 = (unsigned const char *)src;
+    unsigned const char *p2 = (unsigned const char *)dst;
     while (!(ret = *p1 - *p2) && *p1 && *p2)
     {
         ++p1;

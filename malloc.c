@@ -107,6 +107,7 @@ static int brk(void *end_data_segment)
         "movl %%eax, %0 \n\t"
         : "=r"(ret)
         : "m"(end_data_segment));
+    return ret;
 }
 #endif
 

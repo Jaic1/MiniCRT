@@ -1,10 +1,20 @@
 #ifndef __MINI_CRT_H__
 #define __MINI_CRT_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef int FILE;
+
 // malloc.c
 #ifndef NULL
 #define NULL (0)
 #endif
+
+void free(void *ptr);
+void *malloc(unsigned size);
+int mini_crt_heap_init();
 
 // printf.c
 int fputc(char c, FILE *stream);
@@ -13,7 +23,6 @@ int printf(const char *format, ...);
 int fprintf(FILE *stream, const char *format, ...);
 
 // stdio.c
-typedef int FILE;
 #define EOF (-1)
 #ifdef WIN32
 #define stdin ((FILE *)(GetStdHandle(STD_INPUT_HANDLE)))
@@ -25,7 +34,7 @@ typedef int FILE;
 #define stderr ((FILE *)2)
 #endif
 
-int mini_crt_init_io();
+int mini_crt_io_init();
 FILE *fopen(const char *filename, const char *mode);
 int fread(void *buffer, int size, int count, FILE *stream);
 int fwrite(const void *buffer, int size, int count, FILE *stream);
@@ -37,5 +46,17 @@ char *itoa(int n, char *str, int radix);
 int strcmp(const char *src, const char *dst);
 char *strcpy(char *dst, const char *src);
 unsigned strlen(const char *str);
+
+//  internal
+void do_global_ctors();
+void mini_crt_call_exit_routine();
+
+// atexit
+typedef void (*atexit_func_t)(void);
+int atexit(atexit_func_t);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
