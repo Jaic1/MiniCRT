@@ -38,16 +38,16 @@ void free(void *ptr)
     {
         prev->size += header->size;
         prev->next = next;
-        if(next)
+        if (next)
             next->prev = prev;
         header = prev;
     }
-    if(next && next->type == HEAP_BLOCK_FREE)
+    if (next && next->type == HEAP_BLOCK_FREE)
     {
         header->size += next->size;
         next = next->next;
         header->next = next;
-        if(next)
+        if (next)
             next->prev = header;
     }
 }
