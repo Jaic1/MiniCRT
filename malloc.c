@@ -64,7 +64,7 @@ void *malloc(unsigned size)
     while (header)
     {
         // if block big enough
-        if (header->size < size + HEADER_SIZE)
+        if (header->type == HEAP_BLOCK_USED || header->size < size + HEADER_SIZE)
         {
             header = header->next;
             continue;

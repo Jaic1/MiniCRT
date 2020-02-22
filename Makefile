@@ -28,3 +28,4 @@ test: $(ENTR) archive test.o
 
 clean:
 	rm -f *.o *.a *.asm test *.txt
+	rm -rf .vscode

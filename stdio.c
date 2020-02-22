@@ -88,7 +88,7 @@ static int read(int fd, void *buffer, unsigned size)
     asm("movl $3, %%eax \n\t"
         "movl %1, %%ebx \n\t"
         "movl %2, %%ecx \n\t"
-        "movl %3, %%ecx \n\t"
+        "movl %3, %%edx \n\t"
         "int $0x80 \n\t"
         "movl %%eax, %0 \n\t"
         : "=m"(ret)

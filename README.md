@@ -54,3 +54,31 @@ fp = fopen("test.txt", "w");
 ```
 
 4. `printf` not working
+solution:  
+do not define `va_list`, `va_start`, `va_arg` ourself,  
+use `#include <stdarg.h>` instead.
+
+5. `fwrite` not support writing an int
+It just uses size*count, so we should just use `char` to test.
+```
+int fwrite(const void *buffer, int size, int count, FILE *stream)
+{
+    return write((int)stream, buffer, size * count);
+}
+
+```
+my test for `fwrite`(change in `fread` test too):
+```
+fp = fopen("test.txt", "w");
+for (i = 0; i < argc; i++)
+{
+    int len = strlen(v[i]);
+    char len_written = len + '0';
+
+    printf("writing %d%s to fd %d\n", len, v[i], fp);
+    fwrite(&len_written, 1, 1, fp);
+    fwrite(v[i], 1, len, fp);
+    fwrite(&newline, 1, 1, fp);
+}
+fclose(fp);
+```

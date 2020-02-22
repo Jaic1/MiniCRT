@@ -1,5 +1,7 @@
 #include "minicrt.h"
 
+#include <stdarg.h>
+
 int fputc(char c, FILE *stream)
 {
     if (fwrite(&c, 1, 1, stream) != 1)
@@ -16,15 +18,6 @@ int fputs(const char *str, FILE *stream)
     else
         return len;
 }
-
-#ifndef WIN32
-#define va_list char *
-#define va_start(ap, arg) (ap = (va_list)&arg + sizeof(arg))
-#define va_arg(ap, t) (*(t *)((ap += sizeof(t)) - sizeof(t)))
-#define va_end(ap) (ap = (va_list)0)
-#else
-#include <Windows.h>
-#endif
 
 static int vfprintf(FILE *stream, const char *format, va_list args)
 {
