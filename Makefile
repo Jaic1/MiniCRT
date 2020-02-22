@@ -5,9 +5,9 @@ ASMS = entry.asm \
 
 CC = gcc
 CFLAGS = -fno-builtin -nostdlib -fno-stack-protector
-CFLAGS += -m32 -Wall -Werror
+CFLAGS += -mx32 -Wall -Werror -ggdb
 LD = ld
-LDFLAGS = -static -e mini_crt_entry
+LDFLAGS = -static -e mini_crt_entry -m elf32_x86_64
 OBJDUMP = objdump
 
 all: archive asm
@@ -20,13 +20,11 @@ asm: $(ASMS)
 %.asm: %.o
 	$(OBJDUMP) -S $< > $*.asm
 
-# not working yet
-# how to compile and link 32-bit program in 64-bit machine
-test: $(ENTR) archive
-	$(CC) $(CFLAGS) -ggdb -o test.o test.c
+test: $(ENTR) archive test.o
 	$(LD) $(LDFLAGS) $(ENTR) test.o minicrt.a -o $@
+	$(OBJDUMP) -S $@ > $@.asm
 
 .PHONY: clean
 
 clean:
-	rm -f *.o *.a *.asm
+	rm -f *.o *.a *.asm test *.txt

@@ -9,7 +9,7 @@ void exit(int);
 
 static void crt_fatal_error(const char *msg)
 {
-    // printf("fatal error: %s", msg);
+    printf("fatal error: %s", msg);
     exit(1);
 }
 
@@ -52,8 +52,8 @@ void mini_crt_entry(void)
     asm("movl %%ebp, %0\n"
         : "=r"(ebp_reg));
 
-    argc = *(int *)(ebp_reg + 4);
-    argv = (char **)(ebp_reg + 8);
+    argc = *(int *)(ebp_reg + 8);
+    argv = (char **)(ebp_reg + 12);
 #endif
 
     if (!mini_crt_heap_init())

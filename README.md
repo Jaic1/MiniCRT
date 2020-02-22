@@ -1,5 +1,20 @@
 # Source
-code from [程序员的自我修养](https://book.douban.com/subject/3652388/)
+code from [程序员的自我修养](https://book.douban.com/subject/3652388/)  
+only work in x86_64-linux
+
+# Note
+I compile these 32-bit codes on 64-bit machine(x86_64-linux).  
+For detail, refer *Makefile*.  
+In order to do this, there is one place need to be fixed:
+```
+argc = *(int *)(ebp_reg + 8);
+argv = (char **)(ebp_reg + 12);
+```
+They were `+4` and `+8` before,  
+but since we are running 32-bit program on x86_64,  
+the first instruction in `mini_crt_entry` would be `push %rbp`,  
+then `rbp` would occupy 8 bytes in the stack,  
+instead of 4 bytes when compiled and linked for 32-bit machine.
 
 # Errata
 1. In *malloc.c*'s `free` function, next block's prev may not be updated:
@@ -37,3 +52,5 @@ fp = fopen("test.txt", "w");
     }
     fclose(fp);
 ```
+
+4. `printf` not working

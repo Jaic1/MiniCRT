@@ -2,6 +2,8 @@
 
 int main(int argc, char *argv[])
 {
+    printf("in main: argc=%d %d \n", argc, argc);
+
     int i;
     FILE *fp;
     char **v = malloc(argc * sizeof(char *));
