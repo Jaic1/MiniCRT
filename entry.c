@@ -62,13 +62,15 @@ void mini_crt_entry(void)
     if (!mini_crt_io_init())
         crt_fatal_error("IO init failed");
 
+    do_global_ctors();
+
     ret = main(argc, argv);
     exit(ret);
 }
 
 void exit(int exit_code)
 {
-    // mini_crt_call_exit_routine();
+    mini_crt_call_exit_routine();
 #ifdef WIN32
     ExitProcess(exit_code);
 #else

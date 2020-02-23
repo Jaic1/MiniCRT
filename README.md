@@ -82,3 +82,13 @@ for (i = 0; i < argc; i++)
 }
 fclose(fp);
 ```
+
+6. add `delete` function
+ld complain about no declaration about `operator delete(void*, unsigned int)`,  
+so I add it in *new_delete.cpp*
+```
+void operator delete(void *p, unsigned int)
+{
+    free(p);
+}
+```
